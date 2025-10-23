@@ -179,12 +179,40 @@ window.onload = function() {
     waitForDataAndInit();
 }
 
+// Handle section collapse/expand
+function initCollapsibleSections() {
+    const sections = document.querySelectorAll('.section-container');
+    sections.forEach(section => {
+        if (section.id === 'section-settings') return; // Skip settings section
+
+        const title = section.querySelector('.section-title');
+        const content = section.querySelector('.section-content');
+        const chevron = section.querySelector('.chevron');
+
+        // Get saved state from localStorage, default to expanded
+        const isCollapsed = localStorage.getItem(section.id + '-collapsed') === 'true';
+        if (isCollapsed) {
+            content.classList.add('collapsed');
+            chevron.classList.add('collapsed');
+        }
+
+        title.addEventListener('click', () => {
+            content.classList.toggle('collapsed');
+            chevron.classList.toggle('collapsed');
+            // Save state to localStorage
+            localStorage.setItem(section.id + '-collapsed', content.classList.contains('collapsed'));
+        });
+    });
+}
+
 // DOMContentLoaded: Set up settings toggles, state, and filtering logic
 // This block runs as soon as the DOM is ready
 // Handles all settings toggles and their event listeners
 // Also defines the filtering logic for quickref items
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Initialize collapsible sections
+    initCollapsibleSections();
     // Ensure default values for toggles in localStorage
     if (localStorage.getItem('optional') === null) {
         localStorage.setItem('optional', 'false');

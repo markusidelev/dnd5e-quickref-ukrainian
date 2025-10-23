@@ -36,6 +36,41 @@
     background-color: inherit;
     color: white;
     font-size: 16pt;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.section-title-content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-title-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-title .chevron {
+    transition: transform 0.3s ease;
+    font-size: 24px;
+    line-height: 24px;
+    margin-left: 4px;
+}
+
+.section-title .chevron:after {
+    content: '▾';
+}
+
+.section-title .chevron.collapsed {
+    transform: rotate(-90deg);
+}
+
+.section-content.collapsed {
+    display: none;
 }
 
 /* Utility class for floating elements to the right */
