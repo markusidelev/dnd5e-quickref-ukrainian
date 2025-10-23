@@ -34,5 +34,18 @@ data_bonusaction = [
         bullets: [
 
         ]
-    }
+    },
+    {
+        title: "Drink a potion ",
+        optional: "Standard rule",
+        icon: "potion-ball",
+        subtitle: "Roll for the effect",
+        description: "Roll the dice as per the description of the potion",
+        bullets: [
+            "Using a Potion: Potions are consumable items. Drinking a potion or administering it to another creature requires a Bonus Action.", 
+            "Applying an oil might take longer as specified in its description.",
+            "Once used, a potion takes effect immediately, and it is used up."
+        ],
+    },
+    
 ]
