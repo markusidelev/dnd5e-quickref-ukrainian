@@ -196,11 +196,43 @@ function initCollapsibleSections() {
             chevron.classList.add('collapsed');
         }
 
+        // Helper to animate collapse/expand using max-height
+        function animateContent(collapsed) {
+            // Ensure we have an explicit maxHeight to animate from/to
+            const fullHeight = content.scrollHeight + 'px';
+            if (!collapsed) {
+                // expanding: set from 0 to full height then remove max-height so it can grow naturally
+                content.style.maxHeight = '0px';
+                content.classList.remove('collapsed');
+                // force reflow
+                void content.offsetHeight;
+                content.style.maxHeight = fullHeight;
+                content.style.opacity = '1';
+                // after transition ends, clear the inline max-height
+                content.addEventListener('transitionend', function te(ev) {
+                    if (ev.propertyName === 'max-height') {
+                        content.style.maxHeight = '';
+                        content.removeEventListener('transitionend', te);
+                    }
+                });
+            } else {
+                // collapsing: set max-height to current scrollHeight then to 0
+                content.style.maxHeight = fullHeight;
+                // force reflow
+                void content.offsetHeight;
+                content.style.maxHeight = '0px';
+                content.style.opacity = '0';
+                content.classList.add('collapsed');
+            }
+        }
+
         title.addEventListener('click', () => {
-            content.classList.toggle('collapsed');
+            const willBeCollapsed = !content.classList.contains('collapsed');
+            // toggle chevron immediately for snappy UI
             chevron.classList.toggle('collapsed');
+            animateContent(willBeCollapsed);
             // Save state to localStorage
-            localStorage.setItem(section.id + '-collapsed', content.classList.contains('collapsed'));
+            localStorage.setItem(section.id + '-collapsed', willBeCollapsed);
         });
     });
 }
@@ -230,6 +262,27 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set initial toggle state from localStorage
     var rules2024 = localStorage.getItem('rules2024') === 'true';
     rules2024Checkbox.checked = rules2024;
+
+    // Update the label on load to indicate which ruleset the toggle will switch to
+    function updateRulesToggleLabel() {
+        var labelItem = document.getElementById('2024rules-toggle-item');
+        if (!labelItem) return;
+        var titleEl = labelItem.querySelector('.item-title');
+        var descEl = labelItem.querySelector('.item-desc');
+
+        var activeLabel = document.getElementById('active-ruleset-label');
+
+        if (rules2024Checkbox.checked) {
+            if (titleEl) titleEl.textContent = 'Switch to 2014 Rules';
+            if (descEl) descEl.textContent = 'Switches to the D&D 2014 (legacy) ruleset.';
+            if (activeLabel) activeLabel.textContent = 'Current Ruleset: D&D 2024';
+        } else {
+            if (titleEl) titleEl.textContent = 'Switch to 2024 Rules';
+            if (descEl) descEl.textContent = 'Switches to the D&D 2024 ruleset.';
+            if (activeLabel) activeLabel.textContent = 'Current Ruleset: D&D 2014 (legacy)';
+        }
+    }
+    updateRulesToggleLabel();
 
     var darkmode = localStorage.getItem('darkmode') === 'true';
     darkModeCheckbox.checked = darkmode;
@@ -286,7 +339,11 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem('darkmode', darkModeCheckbox.checked ? 'true' : 'false');
         handleDarkModeToggle();
     });
-    rules2024Checkbox.addEventListener('change', handle2024RulesToggle);
+    // When the rules toggle changes, update the label immediately then perform the switch (which reloads)
+    rules2024Checkbox.addEventListener('change', function() {
+        updateRulesToggleLabel();
+        handle2024RulesToggle();
+    });
 
     // Toggle dark mode classes on the page
     function handleDarkModeToggle() {

@@ -62,15 +62,27 @@
 }
 
 .section-title .chevron:after {
-    content: '▾';
+    content: '▸';
 }
 
 .section-title .chevron.collapsed {
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
+}
+
+/* Animated collapse/expand for section content. We animate max-height and opacity.
+   JS will set explicit max-height values during the transition so the animation is smooth. */
+.section-content {
+    overflow: hidden;
+    transition: max-height 300ms ease, opacity 220ms ease;
+    /* default visible state */
+    max-height: none;
+    opacity: 1;
 }
 
 .section-content.collapsed {
-    display: none;
+    /* fallback: collapsed state when JS is not available */
+    max-height: 0 !important;
+    opacity: 0;
 }
 
 /* Utility class for floating elements to the right */
