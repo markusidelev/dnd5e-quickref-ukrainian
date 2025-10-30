@@ -40,12 +40,12 @@ function add_quickref_item(parent, data, type) {
     var subtitle = data.subtitle || "";
     var title = data.title || "[no title]";
     var optional = data.optional || "Standard rule";
+    var description = data.description || data.subtitle || "";
+    var bullets = data.bullets || [];
+    var reference = data.reference || "";
+
     var item = document.createElement("div");
     item.className = "item itemsize";
-
-    var itemIcon = document.createElement("div");
-    itemIcon.className = "item-icon iconsize icon-" + icon;
-    item.appendChild(itemIcon);
 
     var itemTextContainer = document.createElement("div");
     itemTextContainer.className = "item-text-container text";
@@ -59,77 +59,87 @@ function add_quickref_item(parent, data, type) {
     itemDesc.className = "item-desc";
     itemDesc.textContent = subtitle;
     itemTextContainer.appendChild(itemDesc);
+    
+    var itemHeader = document.createElement("div");
+    itemHeader.className = "item-header";
+    itemHeader.innerHTML = `
+        <div class="item-icon iconsize icon-${icon}"></div>
+    `;
+    itemHeader.appendChild(itemTextContainer);
+    itemHeader.innerHTML += '<span class="chevron"></span>';
 
-    item.appendChild(itemTextContainer);
+    var bulletsHTML = bullets.map(function (bullet) {
+        if (typeof bullet === 'object' && bullet.collapsible) {
+            var contentHtml = bullet.content.map(p => `<p>${p}</p>`).join('');
+            return `
+                <div class="item-collapsible-container">
+                    <div class="item-collapsible-title">
+                        ${bullet.title}
+                    </div>
+                    <div class="item-collapsible-content">
+                        ${contentHtml}
+                    </div>
+                </div>`;
+        } else {
+            return `<p>${bullet}</p>`;
+        }
+    }).join("\n<hr>\n");
 
-    // When the item is clicked, show the modal with the item's data
-    item.onclick = function () {
-        var section = parent.parentNode.parentNode;
-        var style = window.getComputedStyle(section);
-        var color = style.backgroundColor;
-        var borderColor = style.borderColor;
-        var darkMode = document.body.classList.contains('dark-mode-active') || document.querySelector('.dark-mode')?.classList.contains('dark-mode-active');
-        var sectionTitle = section.querySelector('.section-title');
-        var titleColor = sectionTitle ? window.getComputedStyle(sectionTitle).color : style.color;
-        show_modal(data, color, type, titleColor, borderColor, darkMode);
-    }
+    var itemContent = document.createElement("div");
+    itemContent.className = "item-content collapsed";
+    itemContent.innerHTML = `
+        <p class="item-description">${description}</p>
+        <div class="item-bullets">${bulletsHTML}</div>
+        <div class="item-reference">${reference}</div>
+    `;
+
+    item.appendChild(itemHeader);
+    item.appendChild(itemContent);
+
+    // Start with content collapsed
+    itemContent.classList.add('collapsed');
+
+    itemHeader.addEventListener('click', () => {
+        const chevron = itemHeader.querySelector('.chevron');
+        const willBeCollapsed = !itemContent.classList.contains('collapsed');
+        chevron.classList.toggle('collapsed');
+
+        if (willBeCollapsed) { // Collapsing
+            // Set max-height to current scrollHeight then to 0
+            itemContent.style.maxHeight = itemContent.scrollHeight + 'px';
+            // force reflow
+            void itemContent.offsetHeight;
+            itemContent.style.maxHeight = '0px';
+            itemContent.style.opacity = '0';
+            itemContent.classList.add('collapsed');
+        } else { // Expanding
+            // Set from 0 to full height then remove max-height
+            itemContent.style.maxHeight = '0px';
+            itemContent.classList.remove('collapsed');
+            // force reflow
+            void itemContent.offsetHeight;
+            itemContent.style.maxHeight = itemContent.scrollHeight + 'px';
+            itemContent.style.opacity = '1';
+            // after transition ends, clear the inline max-height
+            itemContent.addEventListener('transitionend', function te(ev) {
+                if (ev.propertyName === 'max-height') {
+                    itemContent.style.maxHeight = '';
+                    itemContent.removeEventListener('transitionend', te);
+                }
+            });
+        }
+    });
+
     item.setAttribute("title", optional);
     parent.appendChild(item);
 }
 
-// Show the modal dialog for a quickref item
-function show_modal(data, color, type, titleColor, borderColor, darkMode) {
-    var title = data.title || "[no title]";
-    var subtitle = data.description || data.subtitle || "";
-    var bullets = data.bullets || [];
-    var reference = data.reference || "";
-    type = type || "";
-
-    document.body.classList.add("modal-open");
-
-    var modal = document.getElementById("modal");
-    var modalBackdrop = document.getElementById("modal-backdrop");
-    var modalContainer = document.getElementById("modal-container");
-    var modalTitle = document.getElementById("modal-title");
-    var modalSubtitle = document.getElementById("modal-subtitle");
-    var modalReference = document.getElementById("modal-reference");
-    var modalBullets = document.getElementById("modal-bullets");
-
-    modal.classList.add("modal-visible");
-    modalBackdrop.style.height = window.innerHeight + "px";
-
-    // Set modal colors to match section
-    modalContainer.style.backgroundColor = color;
-    modalContainer.style.borderColor = borderColor || color;
-    modalTitle.style.color = titleColor || '';
-
-    modalTitle.innerHTML = title + "<span class=\"float-right\">" + type + "</span>";
-    modalSubtitle.textContent = subtitle;
-    modalReference.textContent = reference;
-
-    var bulletsHTML = bullets.map(function (item) {
-        return "<p class=\"fonstsize\">" + item + "</p>";
-    }).join("\n<hr>\n");
-
-    modalBullets.innerHTML = bulletsHTML;
-}
-
-// Hide the modal if the user clicks outside the modal container
-function hide_modal(event) {
-    var modalContainer = document.getElementById("modal-container");
-    if (!modalContainer.contains(event.target)) {
-        document.body.classList.remove("modal-open");
-        document.getElementById("modal").classList.remove("modal-visible");
-    }
-}
-
-// Add click event to modal for hiding
-var modal = document.getElementById("modal");
-modal.addEventListener("click", hide_modal);
-
 // Fill a section with quickref items from a data array
 function fill_section(data, parentname, type) {
     var parent = document.getElementById(parentname);
+    if (parent && data && data.length > 0) {
+        parent.classList.add('items-grid-container');
+    }
     data.forEach(function (item) {
         add_quickref_item(parent, item, type);
     });
@@ -147,8 +157,6 @@ function init() {
     fill_section(data_environment_vision, "environment-vision", "Environment");
     fill_section(data_environment_cover, "environment-cover", "Environment");
 
-    var modal = document.getElementById("modal");
-    modal.addEventListener("click", hide_modal);
     // Apply initial filtering after items are created
     if (typeof window.handleRulesToggle === 'function') {
         window.handleRulesToggle();
@@ -183,7 +191,7 @@ window.onload = function() {
 function initCollapsibleSections() {
     const sections = document.querySelectorAll('.section-container');
     sections.forEach(section => {
-        if (section.id === 'section-settings') return; // Skip settings section
+        // if (section.id === 'section-settings') return; // This line was preventing the settings section from being collapsible.
 
         const title = section.querySelector('.section-title');
         const content = section.querySelector('.section-content');
@@ -313,13 +321,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 if ((isOptional && optionalCheckbox.checked) ||
                     (isHomebrew && homebrewCheckbox.checked) ||
                     (!isOptional && !isHomebrew)) {
-                    item.style.display = 'block';
+                    // Show item: remove both classes
+                    item.classList.remove('item-hidden');
+                    item.classList.remove('item-removed');
                 } else {
-                    item.style.display = 'none';
+                    // Hide item: add hidden class for fade, then add removed class after delay
+                    item.classList.add('item-hidden');
+
+                    // Use a timeout that matches the CSS transition duration
+                    setTimeout(() => {
+                        // Only set display:none if the item is still supposed to be hidden
+                        if (item.classList.contains('item-hidden')) {
+                            item.classList.add('item-removed');
+                        }
+                    }, 300); // Must match the transition duration in CSS
                 }
             } else {
                 // Always show settings toggles and other non-rule items
-                item.style.display = 'block';
+                item.classList.remove('item-hidden');
+                item.classList.remove('item-removed');
             }
         }
     }

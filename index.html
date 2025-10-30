@@ -154,6 +154,7 @@
                     <div class="section-title-content">
                         <div class="section-title-text">
                             Settings
+                            <span class="chevron"></span>
                         </div>
                         <span class="float-right" id="active-ruleset-label"></span>
                     </div>
@@ -162,70 +163,46 @@
                     <div class="section-row section-subtitle text fontsize">
                         You can change below toggle for settings on this page.
                     </div>
-                    <div class="item itemsize" title="Include Optional Rules">
-                        <div class="item-icon"><label class="switch">
-                                <input type="checkbox" id="optional-switch">
-                                <span class="slider round"></span>
-                            </label></div>
-                        <div class="item-text-container text" id="optional-toggle-item">
-                            <div class="item-title">Include Optional Rules (*)</div>
-                            <div class="item-desc">Show/hide optional rules from DMG.</div>
-                        </div>
-                    </div>
-                    <div class="item itemsize" title="Include Homebre Rules">
-                        <div class="item-icon"><label class="switch">
-                                <input type="checkbox" id="homebrew-switch">
-                                <span class="slider round"></span>
-                            </label></div>
-                        <div class="item-text-container text" id="homebrew-toggle-item">
-                            <div class="item-title">Include Homebrew Rules (**)</div>
-                            <div class="item-desc">Show/hide most common Homebrew rules.</div>
-                        </div>
-                    </div>
-                    <div class="item itemsize" title="Darkmode" hidden>
-                        <div class="item-icon"><label class="switch">
-                                <input type="checkbox" id="darkmode-switch">
-                                <span class="slider round"></span>
-                            </label></div>
-                        <div class="item-text-container text" id="darkmode-toggle-item">
-                            <div class="item-title">Darkmode</div>
-                            <div class="item-desc">Enable Darkmode</div>
-                        </div>
-                    </div>
-                    <div class="item itemsize" title="Include 2024 Rules">
-                        <div class="item-icon"><label class="switch">
-                                <input type="checkbox" id="rules2024-switch">
-                                <span class="slider round"></span>
-                            </label></div>
-                        <div class="item-text-container text" id="2024rules-toggle-item">
-                            <div class="item-title">Switch to 2024 Rules</div>
-                            <div class="item-desc">Enable D&D 2024 Rules.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Modal dialog for displaying detailed quickref item info -->
-        <div class="modal" id="modal" tabindex="-1">
-            <div class="modal-backdrop" id="modal-backdrop"></div>
-            <div class="modal-dialog modalsize">
-                <div class="section-container modal-container" id="modal-container">
-                    <!-- Modal header: displays the title and type of the selected item -->
-                    <div class="section-title" id="modal-title">
-                        Modal title<span class="float-right">Action</span>
-                    </div>
-                    <div class="section-content">
-                        <!-- Modal subtitle: shows a short description or subtitle for the item -->
-                        <div class="section-row section-subtitle text" id="modal-subtitle">
-                            Subtitle
-                        </div>
-                        <!-- Modal bullets: lists detailed points or rules for the item -->
-                        <div class="section-row text">
-                            <div id="modal-bullets">
+                    <div class="section-row" id="settings-items-container">
+                        <div class="item itemsize settings-item" title="Include Optional Rules">
+                            <div class="item-text-container text" id="optional-toggle-item">
+                                <div class="item-title">Include Optional Rules (*)</div>
+                                <div class="item-desc">Show/hide optional rules from DMG.</div>
                             </div>
+                            <div class="item-toggle"><label class="switch">
+                                    <input type="checkbox" id="optional-switch">
+                                    <span class="slider round"></span>
+                                </label></div>
                         </div>
-                        <!-- Modal reference: shows the source or reference for the rule/item -->
-                        <div class="section-row text" id="modal-reference">
+                        <div class="item itemsize settings-item" title="Include Homebre Rules">
+                            <div class="item-text-container text" id="homebrew-toggle-item">
+                                <div class="item-title">Include Homebrew Rules (**)</div>
+                                <div class="item-desc">Show/hide most common Homebrew rules.</div>
+                            </div>
+                            <div class="item-toggle"><label class="switch">
+                                    <input type="checkbox" id="homebrew-switch">
+                                    <span class="slider round"></span>
+                                </label></div>
+                        </div>
+                        <div class="item itemsize settings-item" title="Darkmode" hidden>
+                            <div class="item-text-container text" id="darkmode-toggle-item">
+                                <div class="item-title">Darkmode</div>
+                                <div class="item-desc">Enable Darkmode</div>
+                            </div>
+                            <div class="item-toggle"><label class="switch">
+                                    <input type="checkbox" id="darkmode-switch">
+                                    <span class="slider round"></span>
+                                </label></div>
+                        </div>
+                        <div class="item itemsize settings-item" title="Include 2024 Rules">
+                            <div class="item-text-container text" id="2024rules-toggle-item">
+                                <div class="item-title">Switch to 2024 Rules</div>
+                                <div class="item-desc">Enable D&D 2024 Rules.</div>
+                            </div>
+                            <div class="item-toggle"><label class="switch">
+                                    <input type="checkbox" id="rules2024-switch">
+                                    <span class="slider round"></span>
+                                </label></div>
                         </div>
                     </div>
                 </div>

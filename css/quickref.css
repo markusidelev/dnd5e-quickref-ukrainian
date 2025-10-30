@@ -17,7 +17,6 @@
 /* Content area inside each section */
 .section-content {
     padding: 8px;
-    padding-bottom: 0;
     border-radius: 8px;
     margin-top: 0;
     background-color: white;
@@ -90,18 +89,6 @@
     float: right;
 }
 
-/* Subtitle and reference text in sections and modals */
-.section-subtitle,
-#modal-reference {
-    display: block;
-    margin-bottom: 8px;
-    font-size: inherit;
-    font-style: italic;
-}
-
-#modal-reference {
-    margin-top: 1em;
-}
 
 /* Row container for items and text in sections */
 .section-row {
@@ -121,13 +108,101 @@
 
 /* Item card: represents a single rule or action */
 .item {
-    margin-bottom: 8px;
-    float: left;
     display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center header vertically when collapsed */
+    height: 100%;
     font-size: inherit;
     vertical-align: top;
     box-sizing: border-box;
+    border: 1px solid;
+    border-radius: 4px; 
+    /* background-color: #fff; */ /* Will be set per-section */
+    overflow: hidden;
+}
+
+/* Add transitions for smooth filtering */
+.item {
+    transition: opacity 300ms ease, visibility 300ms ease;
+}
+
+.item-hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.item-removed {
+    display: none;
+}
+
+/* When item is expanded, align header to the top */
+.item:has(.item-content:not(.collapsed)) {
+    justify-content: flex-start;
+    background-color: #fff;
+}
+
+.dark-mode-active .item:has(.item-content:not(.collapsed)) {
+    background-color: #333;
+}
+
+/* When item is expanded, change text color for readability */
+.section-container .item:has(.item-content:not(.collapsed)) {
+    color: #000 !important; /* Black text for light mode */
+}
+.dark-mode-active .section-container .item:has(.item-content:not(.collapsed)) {
+    color: #fff !important; /* White text for dark mode */
+}
+
+.item-header {
+    display: flex;
+    align-items: center;
     cursor: pointer;
+    /* flex-grow: 1; */ /* Removed to keep header at top */
+    padding: 4px;
+}
+
+.item-header .item-text-container,
+.item-header .chevron {
+    /* color: white; */ /* Color will be inherited or set by section */
+}
+
+.item-header .chevron {
+    transition: transform 0.3s ease;
+    font-size: 20px;
+    line-height: 20px;
+    margin-left: auto;
+    padding: 0 8px;
+}
+
+.item-header .chevron:after {
+    content: '▸';
+}
+
+.item-header .chevron.collapsed {
+    transform: rotate(90deg);
+}
+
+.item-content {
+    overflow: hidden;
+    transition: max-height 300ms ease, opacity 220ms ease, padding 300ms ease;
+    /* default visible state */
+    max-height: none;
+    opacity: 1;
+    padding: 8px;
+    background-color: #fafafa;
+}
+
+.item-content.collapsed {
+    max-height: 0 !important;
+    opacity: 0;
+    padding: 0 8px;
+}
+
+.item-description, .item-reference {
+    font-style: italic;
+    font-size: inherit;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 /* Icon for each item */
@@ -147,7 +222,6 @@
     font-size: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 /* Subtitle/description of the item */
@@ -156,7 +230,6 @@
     font-size: inherit;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 /* Container for item text */
@@ -164,65 +237,96 @@
     flex: 1;
     padding-right: 4px;
     font-size: inherit;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */ /* Removed to align text to top */
 }
 
 /* Section and item color themes for each rules section */
 #section-movement,
-#section-movement .item-icon {
+#section-movement .item {
     background-color: maroon;
+    color: white;
+    border-color: maroon;
+}
+#section-movement .item {
     border-color: maroon;
 }
 #section-movement .text {
-    color: maroon;
+    color: white;
 }
 #section-action,
-#section-action .item-icon {
+#section-action .item {
     background-color: black;
+    color: white;
+    border-color: black;
+}
+#section-action .item {
     border-color: black;
 }
 #section-action .text {
-    color: black;
+    color: white;
 }
 #section-bonus-action,
-#section-bonus-action .item-icon {
+#section-bonus-action .item {
     background-color: indigo;
+    color: white;
+    border-color: indigo;
+}
+#section-bonus-action .item {
     border-color: indigo;
 }
 #section-bonus-action .text {
-    color: indigo;
+    color: white;
 }
 #section-reaction,
-#section-reaction .item-icon {
+#section-reaction .item {
     background-color: green;
+    color: white;
+    border-color: green;
+}
+#section-reaction .item {
     border-color: green;
 }
 #section-reaction .text {
-    color: green;
+    color: white;
 }
 #section-condition,
-#section-condition .item-icon {
+#section-condition .item {
     background-color: darkgoldenrod;
+    color: white;
+    border-color: darkgoldenrod;
+}
+#section-condition .item {
     border-color: darkgoldenrod;
 }
 #section-condition .text {
-    color: darkgoldenrod;
+    color: white;
 }
 #section-environment,
-#section-environment .item-icon {
+#section-environment .item {
     background-color: teal;
+    color: white;
+    border-color: teal;
+}
+#section-environment .item {
     border-color: teal;
 }
 #section-environment .text {
-    color: teal;
+    color: white;
 }
 #section-settings,
-#section-section-settings .item-icon {
+#section-settings .section-title {
     background-color: darkblue;
+    color: white;
     border-color: darkblue;
 }
+#section-settings .item {
+    border-color: darkblue;
+    background-color: #fff;
+}
 #section-settings .text {
-    color: darkblue;
+    color: #000;
 }
 
 /* Page container: centers the main content */
@@ -252,56 +356,9 @@ p:first-child {
     margin-top: 1em;
 }
 
-/* Modal dialog styles for popups */
-.modal-open {
-    overflow: hidden;
-}
-.modal-open .modal {
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-.modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1040;
-    overflow: hidden;
-    outline: 0;
-    display: none;
-}
-.modal-visible {
-    display: block;
-}
-.modal-dialog {
-    position: relative;
-    width: auto;
-    margin: 8px;
-}
-.modal-backdrop {
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    background-color: #888;
-    opacity: .75;
-    overflow: hidden;
-}
-.modal-container {
-    background-clip: padding-box;
-    outline: 0;
-    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
-}
-.modal-footer {
-    padding: 15px;
-    text-align: right;
-    border-top: 1px solid #e5e5e5;
-}
-
 /* Responsive font and item sizes for different devices */
 /* Smart phone, portrait */
-@media (min-width: 0px) and (max-width: 479px) {
+@media (min-width: 0px) and (max-width: 600px) {
     .fontsize {
         font-size: 12pt;
     }
@@ -311,16 +368,14 @@ p:first-child {
         height: 44px;
     }
 
-    .itemsize {
-        height: 44px;
+    /* .itemsize {
         width: 100%;
-    }
-
-    .modalsize {}
+        /* padding-right: 0; */ /* No padding needed with margin */
+    /* } */
 }
 
 /* Smart phone, landscape */
-@media (min-width: 480px) and (max-width: 767px) {
+@media (min-width: 601px) and (max-width: 767px) {
     .fontsize {
         font-size: 11pt;
     }
@@ -330,12 +385,10 @@ p:first-child {
         height: 40px;
     }
 
-    .itemsize {
-        height: 40px;
+    /* .itemsize {
         width: 50%;
-    }
-
-    .modalsize {}
+        /* padding-right: 4px; */ /* No padding needed with margin */
+    /* } */
 }
 
 /* Tablet, portrait */
@@ -349,15 +402,10 @@ p:first-child {
         height: 40px;
     }
 
-    .itemsize {
-        height: 40px;
+    /* .itemsize {
         width: 33%;
-    }
-
-    .modalsize {
-        width: 600px;
-        margin: 30px auto;
-    }
+        /* padding-right: 4px; */ /* No padding needed with margin */
+    /* } */
 }
 
 /* Tablet, landscape */
@@ -371,15 +419,10 @@ p:first-child {
         height: 44px;
     }
 
-    .itemsize {
-        height: 44px;
+    /* .itemsize {
         width: 33%;
-    }
-
-    .modalsize {
-        width: 600px;
-        margin: 30px auto;
-    }
+        /* padding-right: 4px; */ /* No padding needed with margin */
+    /* } */
 }
 
 /* Small desktop screen */
@@ -393,15 +436,10 @@ p:first-child {
         height: 44px;
     }
 
-    .itemsize {
-        height: 44px;
+    /* .itemsize {
         width: 25%;
-    }
-
-    .modalsize {
-        width: 600px;
-        margin: 30px auto;
-    }
+        /* padding-right: 4px; */ /* No padding needed with margin */
+    /* } */
 }
 
 /* Large desktop screen */
@@ -415,15 +453,17 @@ p:first-child {
         height: 44px;
     }
 
-    .itemsize {
-        height: 44px;
+    /* .itemsize {
         width: 20%;
-    }
+        /* padding-right: 4px; */ /* No padding needed with margin */
+    /* } */
+}
 
-    .modalsize {
-        width: 600px;
-        margin: 30px auto;
-    }
+/* Flexible item sizing */
+.itemsize {
+    /* flex-grow: 1; */
+    /* flex-basis: 280px; */
+    width: 100%; /* Items will take the width of the grid column */
 }
 
 /* Print */
@@ -438,11 +478,9 @@ p:first-child {
     }
 
     .itemsize {
-        height: 36px;
         width: 33%;
+        /* padding-right: 4px; */ /* No padding needed with margin */
     }
-
-    .modalsize {}
 }
 
 /* Switch/toggle styles for settings */
@@ -505,6 +543,47 @@ input:checked+.slider:before {
     font-family: 'Noto Sans', 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
 }
 
+/* Settings item specific styles */
+.settings-item {
+    flex-direction: row;
+    align-items: center;
+    padding: 4px;
+}
+
+.settings-item .item-text-container {
+    padding-right: 8px;
+}
+
+.settings-item .item-text-container {
+    flex-shrink: 1; /* Allow text to shrink and wrap */
+    min-width: 0; /* Allow flex item to shrink below its content size */
+}
+
+.settings-item .item-toggle {
+    margin-left: auto;
+}
+
+/* Container for settings items to enable flex grid layout */
+#settings-items-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 8px;
+}
+
+.items-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 8px;
+}
+
+/* Remove float-clearing pseudo-elements from grid containers to prevent empty cells */
+.items-grid-container::before,
+.items-grid-container::after,
+#settings-items-container::before,
+#settings-items-container::after {
+    display: none;
+}
+
 /* Dark mode overrides for backgrounds, text, and modal */
 /* Dark mode background and text color */
 .dark-mode-active {
@@ -525,15 +604,10 @@ input:checked+.slider:before {
 
 /* Section row, subtitle, and modal reference text color in dark mode */
 .dark-mode-active .section-row,
-.dark-mode-active .section-subtitle,
-.dark-mode-active #modal-reference {
+.dark-mode-active .section-subtitle {
     color: #fff;
 }
 
-/* Item background color in dark mode */
-.dark-mode-active .item {
-    background-color: #333;
-}
 
 /* Item title, description, and text container color in dark mode */
 .dark-mode-active .item-title,
@@ -547,77 +621,88 @@ input:checked+.slider:before {
     border-top-color: #666;
 }
 
-/* Modal backdrop color in dark mode */
-.dark-mode-active .modal-backdrop {
-    background-color: rgba(0, 0, 0, 0.75);
+.dark-mode-active .item-content {
+    background-color: #2a2a2a;
 }
 
-/* Modal container shadow in dark mode */
-.dark-mode-active .modal-container {
-    box-shadow: 0 3px 9px rgba(255, 255, 255, 0.5);
-}
 
-/* Modal footer border color in dark mode */
-.dark-mode-active .modal-footer {
-    border-top-color: #555;
-}
-
-/* Section color overrides in dark mode for each rules section */
 .dark-mode-active #section-movement,
-.dark-mode-active #section-movement .item-icon {
+.dark-mode-active #section-movement .item {
     background-color: #8f3838;
+    border-color: #8f3838;
+}
+.dark-mode-active #section-movement .item {
     border-color: #8f3838;
 }
 .dark-mode-active #section-movement .text {
     color: #fff;
 }
+.dark-mode-active #section-action,
+.dark-mode-active #section-action .item {
+    background-color: #09151A;
+    border-color: #09151A;
+}
+.dark-mode-active #section-action .item {
+    border-color: #09151A;
+}
 .dark-mode-active #section-action .text {
     color: #fff;
 }
-.dark-mode-active #section-action,
-.dark-mode-active #section-action .item-icon {
-    background-color: #09151A;
-    border-color: #09151A;
+.dark-mode-active #section-bonus-action,
+.dark-mode-active #section-bonus-action .item {
+    background-color: #311942;
+    border-color: #311942;
+}
+.dark-mode-active #section-bonus-action .item {
+    border-color: #311942;
 }
 .dark-mode-active #section-bonus-action .text {
     color: #fff;
 }
-.dark-mode-active #section-bonus-action,
-.dark-mode-active #section-bonus-action .item-icon {
-    background-color: #311942;
-    border-color: #311942;
+.dark-mode-active #section-reaction,
+.dark-mode-active #section-reaction .item {
+    background-color: DarkOliveGreen;
+    border-color: DarkOliveGreen;
+}
+.dark-mode-active #section-reaction .item {
+    border-color: DarkOliveGreen;
 }
 .dark-mode-active #section-reaction .text {
     color: #fff;
-}
-.dark-mode-active #section-reaction,
-.dark-mode-active #section-reaction .item-icon {
-    background-color: DarkOliveGreen;
-    border-color: DarkOliveGreen;
 }
 .dark-mode-active #section-condition .text {
     color: #fff;
 }
 .dark-mode-active #section-condition,
-.dark-mode-active #section-condition .item-icon {
+.dark-mode-active #section-condition .item {
     background-color: #7a4b2a;
     border-color: #7a4b2a;
+}
+.dark-mode-active #section-condition .item {
+    border-color: #7a4b2a;
+}
+.dark-mode-active #section-environment,
+.dark-mode-active #section-environment .item {
+    background-color: #2f4f4f;
+    border-color: #2f4f4f;
+}
+.dark-mode-active #section-environment .item {
+    border-color: #2f4f4f;
 }
 .dark-mode-active #section-environment .text {
     color: #fff;
 }
-.dark-mode-active #section-environment,
-.dark-mode-active #section-environment .item-icon {
-    background-color: #2f4f4f;
-    border-color: #2f4f4f;
-}
-.dark-mode-active #section-settings .text {
-    color: #fff;
-}
 .dark-mode-active #section-settings,
-.dark-mode-active #section-section-settings .item-icon {
+.dark-mode-active #section-settings .section-title {
     background-color: DarkSlateBlue;
     border-color: DarkSlateBlue;
+}
+.dark-mode-active #section-settings .item {
+    border-color: DarkSlateBlue;
+    background-color: #333;
+}
+.dark-mode-active #section-settings .text {
+    color: #fff; /* Text is already white in dark mode, this is correct */
 }
 
 /* Switch styles in dark mode */
@@ -626,21 +711,6 @@ input:checked+.slider:before {
 }
 .dark-mode-active input:focus+.slider {
     box-shadow: 0 0 1px DarkSlateBlue;
-}
-
-/* Dark mode backdrop color */
-.dark-mode-active .modal-backdrop {
-    background-color: rgba(0, 0, 0, 0.75); /* Dark mode backdrop color */
-}
-
-/* Dark mode modal container shadow */
-.dark-mode-active .modal-container {
-    box-shadow: 0 3px 9px rgba(255, 255, 255, 0.5); /* Dark mode modal container shadow */
-}
-
-/* Dark mode modal footer border color */
-.dark-mode-active .modal-footer {
-    border-top-color: #555; /* Dark mode modal footer border color */
 }
 
 /* Cookie notice bar at the bottom of the page */

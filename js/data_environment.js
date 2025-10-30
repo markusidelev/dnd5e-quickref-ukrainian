@@ -112,7 +112,7 @@ data_environment_cover = [
         bullets: [
             "The obstacle might be a low wall, a large piece of furniture, a narrow tree trunk, or a creature, whether that creature is an enemy or a friend.",
             "A target with half cover has a <b>+2 bonus to AC and Dexterity saving throws</b>.",
-            " If a target is behind multiple sources of cover, only the most protective degree of cover applies"
+            "If a target is behind multiple sources of cover, only the most protective degree of cover applies"
         ]
     },
     {
@@ -125,7 +125,7 @@ data_environment_cover = [
         bullets: [
             "The obstacle might be a portcullis, an arrow slit, or a thick tree trunk.",
             "A target with three-quarters cover has a <b>+5 bonus to AC and Dexterity saving throws</b>.",
-            " If a target is behind multiple sources of cover, only the most protective degree of cover applies"
+            "If a target is behind multiple sources of cover, only the most protective degree of cover applies"
         ]
     },
     {
