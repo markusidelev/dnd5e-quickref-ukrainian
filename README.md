@@ -1,6 +1,6 @@
 # mfriik/dnd5e-quickref
 
-##MAKE SURE TO HARD REFRESH (CTRL+SHIFT+R or CTRL+F5) THE PAGE IF IT LOOKS BROKEN
+## MAKE SURE TO HARD REFRESH (CTRL+SHIFT+R or CTRL+F5) THE PAGE IF IT LOOKS BROKEN
 
 A compact, printable and browser-friendly quick reference sheet for Dungeons & Dragons 5th Edition — supporting both 2014 rules and a 2024 rules update. This project is a personalized fork that builds on top of earlier community work to provide a useful, easy-to-edit reference for players and GMs.
 
