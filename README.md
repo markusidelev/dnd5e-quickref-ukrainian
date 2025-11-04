@@ -1,61 +1,116 @@
-# mfriik/dnd5e-quickref v2.0
+# 🎲 mfriik/dnd5e-quickref v2.0
 
-## MAKE SURE TO HARD REFRESH (CTRL+SHIFT+R or CTRL+F5) THE PAGE IF IT LOOKS BROKEN
+> **💡 Important:**  
+> If the page looks off, sections don’t load, or you’re not seeing the newest features —  
+> **hard-refresh your browser** (`Ctrl + Shift + R` or `Ctrl + F5`).  
+>
+> GitHub Pages and browsers aggressively cache static files,  
+> so a full reload ensures you’re running the latest version with **all recent improvements, fixes, and UI updates**.  
+>
+> Think of it as your *long rest* for the app — refresh to recharge and unlock new abilities!
 
-A compact, printable and browser-friendly quick reference sheet for Dungeons & Dragons 5th Edition — supporting both 2014 rules and a 2024 rules update. This project is a personalized fork that builds on top of earlier community work to provide a useful, easy-to-edit reference for players and GMs.
+---
 
-## Live view
+## 🌐 Live View
 
-- [mfriik.github.io/dnd5e-quickref/](https://mfriik.github.io/dnd5e-quickref/)
-- [dnd.milobedzki.pl](https://dnd.milobedzki.pl/)
+- [**mfriik.github.io/dnd5e-quickref**](https://mfriik.github.io/dnd5e-quickref/)  
+- [**dnd.milobedzki.pl**](https://dnd.milobedzki.pl/)
 
-## What this is
+---
 
-- A single-page quick reference for common D&D 5e rules, actions, combat steps, conditions, and other frequently used information.
-- Lightweight, static HTML/CSS/JS — easy to host (GitHub Pages or any static host).
-- Customizable: the sheet content is stored in simple JavaScript data files so you can add or change entries without modifying markup.
+## 🧾 What This Is
 
-## Quick features
+A **compact, printable, browser-friendly quick reference sheet** for *Dungeons & Dragons 5e* —  
+supporting both the classic **2014** and the updated **2024** rulesets.
 
-- Compact layout optimized for quick scanning at the table. Now with Collapsible sections
-- Toggles to enable homebrew rules and optional rules.
-- Dark mode enabled.
-- Easy Switch between 2024 and 2014 Rulesets
+It’s built for players and DMs who want the essentials at their fingertips —  
+**no scrolling through PDFs, no rules hunting mid-combat.**
 
-## Editing the sheet
+---
 
-- The content lives in the `js` folder. Edit the `data` files there to:
-  - Add or change actions
-  - Add custom notes or house rules
-  - Add new sections
-- No build step required — changes in the `js` files are reflected immediately in the page.
+<details>
+<summary>🧰 <strong>Core Features</strong></summary>
 
-## Repository layout (high level)
+- ⚡ **Fast** – Lightweight static HTML/CSS/JS.
+- 🗂️ **Collapsible Sections & Items** – Expand only what you need and see everything at a glance.  
+- 🧙 **Optional & Homebrew Toggles** – Show or hide extra content on demand.  
+- 🌗 **Dark Mode** – Eye-friendly for late-night sessions.  
+- 🔄 **2014 ↔ 2024 Rules Switch** – Instantly swap between editions.  
+- 🪶 **Printer Friendly** – Perfect for physical quick sheets.  
 
-- index.html — main page
-- css/ — stylesheets
-- js/ — JavaScript and data files (edit these to customize)
-- img/ — icons and images
+</details>
 
-## Contributing
+---
 
-- Found a layout issue or have an improvement idea? Please open an issue: <https://github.com/mfriik/dnd5e-quickref/issues>
-- Want to contribute a fix or enhancement? Fork the repo, make changes, and submit a pull request. When editing content, prefer small, focused commits and describe the change clearly in the PR.
-- If you want a minor personal tweak (e.g., add actions for a character), edit the `js/data` files in your fork or locally — that’s the fastest route.
+<details>
+<summary>🛠️ <strong>Editing the Sheet</strong></summary>
 
-## Credits and acknowledgements
+The magic lives inside the **`js/`** folder — each data file defines a rules section.
 
-- Original project: <https://github.com/crobi/dnd5e-quickref>
-- 2024 rules update source used: <https://github.com/nico-713/dnd5e-quickref-2024>
-- Icons: <http://game-icons.net/>
-- Favicon: <https://iconduck.com/icons/21871/dragon>
+You can:
 
-## License
+- ✏️ Add or modify **actions**, **conditions**, or **environmental effects**  
+- 🧩 Insert **custom notes** or **house rules**  
 
-- Check the repository LICENSE file for license terms. If there is no LICENSE file, assume upstream license applies or contact the maintainer for clarification.
+Changes appear instantly — **no build pipeline, no bundlers, no nonsense.**
 
-## Contact
+</details>
 
-- Issues: <https://github.com/mfriik/dnd5e-quickref/issues>
+---
 
-Thanks for using and improving this quick reference — May the dice be forever in your favour!
+<details>
+<summary>📂 <strong>Repository Layout</strong></summary>
+index.html ← main page
+css/ ← stylesheets
+js/ ← JavaScript + data files
+img/ ← icons and images
+
+</details>
+
+---
+
+<details>
+<summary>🤝 <strong>Contributing</strong></summary>
+
+- Found a bug or have an idea? → [Open an Issue](https://github.com/mfriik/dnd5e-quickref/issues)  
+- Want to add a rule or feature? → Fork → Commit → PR  
+
+When editing, keep changes **focused and well-described**.  
+For personal tweaks (like adding your own class actions), edit the `js/data` files directly — and host it for yourself.
+
+</details>
+
+---
+
+<details>
+<summary>📜 <strong>Credits & Acknowledgements</strong></summary>
+
+- 🧩 Original project: [**crobi/dnd5e-quickref**](https://github.com/crobi/dnd5e-quickref)  
+- 🪄 2024 rules update source: [**nico-713/dnd5e-quickref-2024**](https://github.com/nico-713/dnd5e-quickref-2024)  
+- 🎨 Icons: [**game-icons.net**](http://game-icons.net/)  
+- 🐉 Favicon: [**iconduck.com/icons/21871/dragon**](https://iconduck.com/icons/21871/dragon)
+
+</details>
+
+---
+
+<details>
+<summary>⚖️ <strong>License</strong></summary>
+
+Check the `LICENSE` file in this repository.  
+
+</details>
+
+---
+
+<details>
+<summary>🧭 <strong>Contact</strong></summary>
+
+- 📮 Issues → [GitHub Issues Page](https://github.com/mfriik/dnd5e-quickref/issues)  
+
+</details>
+
+---
+
+> **Thanks for using and improving this quick reference!**  
+> May the dice be forever in your favour!
