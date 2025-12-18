@@ -1,28 +1,9 @@
-/*
-Template examples (hidden):
+// Ukrainian 2024 condition data placeholder - left empty for now
+data_condition = [
+    // Ukrainian translations for 2024 rules will be added here later.
+]
 
-// Optional rule example:
-// {
-//   title: "Example Optional Condition",
-//   optional: "Optional rule",
-//   icon: "example-icon",
-//   subtitle: "Short subtitle",
-//   description: "A short description of the optional condition.",
-//   reference: "PHB, pg. X",
-//   bullets: ["Detail 1"]
-// }
 
-// Homebrew rule example:
-// {
-//   title: "Example Homebrew Condition",
-//   optional: "Homebrew rule",
-//   icon: "cross-mark",
-//   subtitle: "Homebrew subtitle",
-//   description: "Description of homebrew condition.",
-//   reference: "Homebrew",
-//   bullets: ["Homebrew detail"]
-// }
-*/
 
 data_condition = [
     {

@@ -1,3 +1,29 @@
+/*
+Template examples (hidden):
+
+// Optional rule example:
+// {
+//   title: "Example Optional Movement",
+//   optional: "Optional rule",
+//   icon: "example-icon",
+//   subtitle: "Short subtitle",
+//   description: "A short description of the optional movement rule.",
+//   reference: "PHB, pg. X",
+//   bullets: ["Detail 1"]
+// }
+
+// Homebrew rule example:
+// {
+//   title: "Example Homebrew Movement",
+//   optional: "Homebrew rule",
+//   icon: "mountain-climbing",
+//   subtitle: "Homebrew subtitle",
+//   description: "Description of homebrew movement.",
+//   reference: "Homebrew",
+//   bullets: ["Homebrew detail"]
+// }
+*/
+
 data_movement = [
     {
         title: "Move",

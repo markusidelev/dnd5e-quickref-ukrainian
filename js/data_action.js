@@ -1,3 +1,34 @@
+/*
+Template examples (hidden):
+
+// Optional rule example:
+// {
+//   title: "Example Optional Rule",
+//   optional: "Optional rule",
+//   icon: "example-icon",
+//   subtitle: "Short subtitle",
+//   description: "A short description of the optional rule.",
+//   reference: "PHB, pg. X",
+//   bullets: [
+//     "Detail 1",
+//     "Detail 2"
+//   ]
+// }
+
+// Homebrew rule example:
+// {
+//   title: "Example Homebrew Rule",
+//   optional: "Homebrew rule",
+//   icon: "sword-break",
+//   subtitle: "Homebrew subtitle",
+//   description: "Description of homebrew rule.",
+//   reference: "Homebrew",
+//   bullets: [
+//     "Homebrew detail"
+//   ]
+// }
+*/
+
 data_action = [
     {
         title: "Attack",

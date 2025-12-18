@@ -1,3 +1,29 @@
+/*
+Template examples (hidden):
+
+// Optional rule example:
+// {
+//   title: "Example Optional Condition",
+//   optional: "Optional rule",
+//   icon: "example-icon",
+//   subtitle: "Short subtitle",
+//   description: "A short description of the optional condition.",
+//   reference: "PHB, pg. X",
+//   bullets: ["Detail 1"]
+// }
+
+// Homebrew rule example:
+// {
+//   title: "Example Homebrew Condition",
+//   optional: "Homebrew rule",
+//   icon: "cross-mark",
+//   subtitle: "Homebrew subtitle",
+//   description: "Description of homebrew condition.",
+//   reference: "Homebrew",
+//   bullets: ["Homebrew detail"]
+// }
+*/
+
 data_condition = [
     {
         title: "Blinded",

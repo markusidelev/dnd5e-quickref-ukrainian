@@ -1,28 +1,20 @@
-/*
-Template examples (hidden):
+// Ukrainian 2024 environment data placeholder - left empty for now
+// This file may define arrays: data_environment_obscurance, data_environment_light, data_environment_vision, data_environment_cover
+data_environment_obscurance = [
+    // Ukrainian translations for 2024 rules will be added here later.
+]
 
-// Optional rule example:
-// {
-//   title: "Example Optional Environment",
-//   optional: "Optional rule",
-//   icon: "example-icon",
-//   subtitle: "Short subtitle",
-//   description: "A short description of the optional environment rule.",
-//   reference: "PHB, pg. X",
-//   bullets: ["Detail 1"]
-// }
+data_environment_light = [
+    // Ukrainian translations for 2024 rules will be added here later.
+]
 
-// Homebrew rule example:
-// {
-//   title: "Example Homebrew Environment",
-//   optional: "Homebrew rule",
-//   icon: "shield-bash",
-//   subtitle: "Homebrew subtitle",
-//   description: "Description of homebrew environment rule.",
-//   reference: "Homebrew",
-//   bullets: ["Homebrew detail"]
-// }
-*/
+data_environment_vision = [
+    // Ukrainian translations for 2024 rules will be added here later.
+]
+
+data_environment_cover = [
+    // Ukrainian translations for 2024 rules will be added here later.
+]
 data_environment_obscurance = [
     {
         title: "Легке затемнення (Lightly obscured)",

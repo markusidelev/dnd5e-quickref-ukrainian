@@ -1,3 +1,29 @@
+/*
+Приклади шаблонів (сховано):
+
+// Приклад необов'язкового правила:
+// {
+//   title: "Приклад необов'язкового правила",
+//   optional: "Optional rule",
+//   icon: "example-icon",
+//   subtitle: "Коротка підзаголовок",
+//   description: "Короткий опис необов'язкового правила",
+//   reference: "PHB, pg. X",
+//   bullets: ["Деталь 1"]
+// }
+
+// Приклад домашнього правила:
+// {
+//   title: "Приклад домашнього правила",
+//   optional: "Homebrew rule",
+//   icon: "shield-bash",
+//   subtitle: "Домашній підзаголовок",
+//   description: "Опис домашнього правила",
+//   reference: "Homebrew",
+//   bullets: ["Домашня деталь"]
+// }
+*/
+
 data_environment_obscurance = [
     {
         title: "Lightly obscured",

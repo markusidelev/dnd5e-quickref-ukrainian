@@ -1,3 +1,29 @@
+/*
+Template examples (hidden):
+
+// Optional rule example:
+// {
+//   title: "Example Optional Bonus Action",
+//   optional: "Optional rule",
+//   icon: "example-icon",
+//   subtitle: "Short subtitle",
+//   description: "A short description of the optional rule.",
+//   reference: "PHB, pg. X",
+//   bullets: ["Detail 1"]
+// }
+
+// Homebrew rule example:
+// {
+//   title: "Example Homebrew Bonus Action",
+//   optional: "Homebrew rule",
+//   icon: "sword-break",
+//   subtitle: "Homebrew subtitle",
+//   description: "Description of homebrew bonus action.",
+//   reference: "Homebrew",
+//   bullets: ["Homebrew detail"]
+// }
+*/
+
 data_bonusaction = [
     {
         title: "Offhand Attack",

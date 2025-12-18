@@ -1,3 +1,29 @@
+/*
+Template examples (hidden):
+
+// Optional rule example:
+// {
+//   title: "Example Optional Reaction",
+//   optional: "Optional rule",
+//   icon: "example-icon",
+//   subtitle: "Short subtitle",
+//   description: "A short description of the optional reaction.",
+//   reference: "PHB, pg. X",
+//   bullets: ["Detail 1"]
+// }
+
+// Homebrew rule example:
+// {
+//   title: "Example Homebrew Reaction",
+//   optional: "Homebrew rule",
+//   icon: "crossed-swords",
+//   subtitle: "Homebrew subtitle",
+//   description: "Description of homebrew reaction.",
+//   reference: "Homebrew",
+//   bullets: ["Homebrew detail"]
+// }
+*/
+
 data_reaction = [
     {
         title: "Opportunity attack",

@@ -548,6 +548,19 @@ document.addEventListener("DOMContentLoaded", function () {
         var items = document.getElementsByClassName('item itemsize');
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
+            // Don't apply rule filtering to settings items (they contain words like "Optional"
+            // or "Homebrew" in their titles which would cause them to be hidden).
+            if (item.classList && item.classList.contains('settings-item')) {
+                item.classList.remove('item-hidden');
+                item.classList.remove('item-removed');
+                continue;
+            }
+            // Also ensure anything inside the settings section is always visible
+            if (item.closest && item.closest('#section-settings')) {
+                item.classList.remove('item-hidden');
+                item.classList.remove('item-removed');
+                continue;
+            }
             var ruleType = item.getAttribute('title') || '';
             var low = ruleType.toLowerCase();
             // Normalize detection to support English and Ukrainian labels
@@ -630,6 +643,21 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
         localStorage.setItem('darkmode', darkModeCheckbox.checked ? 'true' : 'false');
+        // If dark mode is turned off (light mode), automatically disable OLED mode
+        // because OLED true-black only makes sense in dark mode.
+        if (!darkModeCheckbox.checked) {
+            try {
+                var oledEl = document.getElementById('oled-switch');
+                if (oledEl && oledEl.checked) {
+                    oledEl.checked = false;
+                }
+            } catch (e) {}
+            // Remove oled-mode class from all relevant elements and clear storage
+            try {
+                document.querySelectorAll('.dark-mode, .page-background').forEach(el => el.classList.remove('oled-mode'));
+            } catch (e) {}
+            localStorage.setItem('oled', 'false');
+        }
     }
 
     // Handle OLED true-black mode
