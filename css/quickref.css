@@ -26,7 +26,7 @@
 
 /* Section title bar */
 .section-title {
-    height: 32px;
+    height: 50px;
     padding-left: 8px;
     padding-right: 8px;
     font-family: Lora, 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
@@ -139,8 +139,10 @@
 
 /* Ensure subtitle is readable in light mode by overriding the .text color */
 .section-container .section-content .section-subtitle.text {
+    margin: 5px;
     color: #000 !important;
 }
+
 
 /* Item card: represents a single rule or action */
 .item {

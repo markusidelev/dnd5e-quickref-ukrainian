@@ -55,7 +55,7 @@
 // Translations for UI strings
 var UI_TRANSLATIONS = {
     en: {
-        collapseAll: 'Collapse all items',
+        collapseAll: 'Collapse',
         movement: { title: 'Movement', floatRight: 'limited by movement speed', subtitle: 'You can move at any time during your turn (before, after, or during actions).' },
         action: { title: 'Action', floatRight: '1/turn', subtitle: 'You can also interact with one object or feature of the environment for free.' },
         bonus: { title: 'Bonus action', floatRight: 'max. 1/turn', subtitle: 'You can take a bonus action only when a special ability, spell, or feature states that you can do something as a bonus action.' },
@@ -80,7 +80,7 @@ var UI_TRANSLATIONS = {
         cookie: { text: 'This website uses cookies to ensure you get the best experience on our website.', button: 'Accept' }
     },
     uk: {
-        collapseAll: 'Згорнути всі пункти',
+        collapseAll: 'Згорнути',
         movement: { title: 'Рух', floatRight: 'обмежено швидкістю руху', subtitle: 'Ви можете рухатися в будь-який момент під час свого ходу (до, після або під час дій).' },
         action: { title: 'Дія', floatRight: '1/хід', subtitle: 'Ви також можете взаємодіяти з одним об\'єктом або елементом середовища безкоштовно.' },
         bonus: { title: 'Бонусна дія', floatRight: 'макс. 1/хід', subtitle: 'Ви можете виконати бонусну дію тільки коли особливість, заклинання або здатність дозволяє це.' },
