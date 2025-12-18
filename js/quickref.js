@@ -100,11 +100,15 @@ var UI_TRANSLATIONS = {
         rules2024_on: { title: 'Переключити на правила 2014', desc: 'Переключає на застарілий набір правил D&D 2014.' },
         rules2024_off: { title: 'Переключити на правила 2024', desc: 'Переключає на набір правил D&D 2024.' },
         activeRuleset_on: 'Поточний набір правил: D&D 2024',
-        activeRuleset_off: 'Поточний набір правил: D&D 2014 (застарілий)',
+        activeRuleset_off: 'Поточний набір правил: D&D 2014',
         feedback: { title: 'Залишити відгук', desc: 'Знайшли проблему або маєте пропозицію? Повідомте мене!' },
         cookie: { text: 'Цей вебсайт використовує файли cookie, щоб забезпечити кращий досвід користування.', button: 'Прийняти' }
     }
 };
+
+// Add OLED translations
+UI_TRANSLATIONS.en.oled = { title: 'OLED True Black', desc: 'Enable deep black theme for OLED screens.' };
+UI_TRANSLATIONS.uk.oled = { title: 'OLED: справжня чорна', desc: 'Увімкнути глибоку чорну тему для OLED-екранів.' };
 
 // Apply translations to static UI elements
 function applyTranslations(lang) {
@@ -192,6 +196,9 @@ function applyTranslations(lang) {
 
     // Cookie notice
     var cookie = document.getElementById('cookie-notice'); if (cookie) { var p = cookie.querySelector('p'); var btn = cookie.querySelector('#accept-cookies'); if (p) p.textContent = t.cookie.text; if (btn) btn.textContent = t.cookie.button; }
+
+        // OLED label
+        var oledItem = document.getElementById('oled-toggle-item'); if (oledItem) { var ot = oledItem.querySelector('.item-title'); var od = oledItem.querySelector('.item-desc'); if (ot) ot.textContent = t.oled.title; if (od) od.textContent = t.oled.desc; }
 
 }
 
@@ -521,6 +528,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var darkmode = localStorage.getItem('darkmode') === 'true';
     darkModeCheckbox.checked = darkmode;
 
+    var oled = localStorage.getItem('oled') === 'true';
+    var oledCheckbox = document.getElementById('oled-switch');
+    if (oledCheckbox) oledCheckbox.checked = oled;
+
     var optional = localStorage.getItem('optional') === 'true';
     optionalCheckbox.checked = optional;
 
@@ -529,38 +540,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Apply dark mode state on load
     handleDarkModeToggle();
+    // Apply OLED mode on load
+    try { handleOLEDToggle(); } catch (e) { /* ignore if handler not ready */ }
 
     // Filtering logic for quickref items based on toggles
     function handleRulesToggle() {
         var items = document.getElementsByClassName('item itemsize');
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
-            var ruleType = item.getAttribute('title');
-            // Only filter items that are actual quickref rules
-            if (ruleType === 'Optional rule' || ruleType === 'Homebrew rule' || ruleType === 'Standard rule') {
-                var isOptional = ruleType === 'Optional rule';
-                var isHomebrew = ruleType === 'Homebrew rule';
+            var ruleType = item.getAttribute('title') || '';
+            var low = ruleType.toLowerCase();
+            // Normalize detection to support English and Ukrainian labels
+            var isOptional = low.indexOf('optional') !== -1 || low.indexOf('необов') !== -1 || low.indexOf('optional rule') !== -1;
+            var isHomebrew = low.indexOf('homebrew') !== -1 || low.indexOf('домаш') !== -1 || low.indexOf('homebrew rule') !== -1;
+            var isStandard = low.indexOf('standard') !== -1 || low.indexOf('стандарт') !== -1;
+
+            if (isOptional || isHomebrew || isStandard) {
                 // Show item if:
                 // - It's an optional rule and the optional toggle is ON
                 // - It's a homebrew rule and the homebrew toggle is ON
                 // - It's a standard rule (always show)
                 if ((isOptional && optionalCheckbox.checked) ||
                     (isHomebrew && homebrewCheckbox.checked) ||
-                    (!isOptional && !isHomebrew)) {
-                    // Show item: remove both classes
+                    (isStandard && !isOptional && !isHomebrew)) {
                     item.classList.remove('item-hidden');
                     item.classList.remove('item-removed');
                 } else {
-                    // Hide item: add hidden class for fade, then add removed class after delay
                     item.classList.add('item-hidden');
-
-                    // Use a timeout that matches the CSS transition duration
                     setTimeout(() => {
-                        // Only set display:none if the item is still supposed to be hidden
                         if (item.classList.contains('item-hidden')) {
                             item.classList.add('item-removed');
                         }
-                    }, 300); // Must match the transition duration in CSS
+                    }, 300);
                 }
             } else {
                 // Always show settings toggles and other non-rule items
@@ -579,16 +590,29 @@ document.addEventListener("DOMContentLoaded", function () {
     // Event listeners for toggles: update localStorage and re-filter on change
     optionalCheckbox.addEventListener('change', function() {
         localStorage.setItem('optional', optionalCheckbox.checked ? 'true' : 'false');
-        handleRulesToggle();
+        // Reload page to ensure language-specific data files and UI fully refresh
+        document.body.classList.remove('fade-in');
+        document.body.classList.add('fade-out');
+        setTimeout(function() { location.reload(); }, 650);
     });
     homebrewCheckbox.addEventListener('change', function() {
         localStorage.setItem('homebrew', homebrewCheckbox.checked ? 'true' : 'false');
-        handleRulesToggle();
+        // Reload page to ensure changes apply consistently
+        document.body.classList.remove('fade-in');
+        document.body.classList.add('fade-out');
+        setTimeout(function() { location.reload(); }, 650);
     });
     darkModeCheckbox.addEventListener('change', function() {
         localStorage.setItem('darkmode', darkModeCheckbox.checked ? 'true' : 'false');
         handleDarkModeToggle();
     });
+    if (oledCheckbox) {
+        oledCheckbox.addEventListener('change', function() {
+            // Persist and apply OLED mode immediately
+            localStorage.setItem('oled', oledCheckbox.checked ? 'true' : 'false');
+            handleOLEDToggle();
+        });
+    }
     // When the rules toggle changes, update the label immediately then perform the switch (which reloads)
     rules2024Checkbox.addEventListener('change', function() {
         updateRulesToggleLabel();
@@ -606,6 +630,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
         localStorage.setItem('darkmode', darkModeCheckbox.checked ? 'true' : 'false');
+    }
+
+    // Handle OLED true-black mode
+    function handleOLEDToggle() {
+        const oledElements = document.querySelectorAll('.dark-mode, .page-background');
+        const oledOn = (oledCheckbox && oledCheckbox.checked) || false;
+        oledElements.forEach(element => {
+            if (oledOn) {
+                element.classList.add('oled-mode');
+            } else {
+                element.classList.remove('oled-mode');
+            }
+        });
+        localStorage.setItem('oled', oledOn ? 'true' : 'false');
     }
 
     // Handle switching between 2024 and standard rules
@@ -636,6 +674,8 @@ document.addEventListener("DOMContentLoaded", function () {
     homebrewToggleItem.addEventListener('click', handleToggleClick(homebrewCheckbox));
     darkModeToggleItem.addEventListener('click', handleToggleClick(darkModeCheckbox));
     rules2024ToggleItem.addEventListener('click', handleToggleClick(rules2024Checkbox));
+    var oledToggleItem = document.getElementById('oled-toggle-item');
+    if (oledToggleItem) oledToggleItem.addEventListener('click', handleToggleClick(oledCheckbox));
 });
 
 // === Smooth Fade + Grid Reflow ===
