@@ -26,7 +26,7 @@
 
 /* Section title bar */
 .section-title {
-    height: 50px;
+    height: 60px;
     padding-left: 8px;
     padding-right: 8px;
     font-family: Lora, 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
@@ -88,7 +88,8 @@
 
 .collapse-all-btn:active {
     background-color: inherit;
-    transition-duration: 0.05s; /* Make the click feedback feel faster */
+    transition-duration: 0.05s;
+    /* Make the click feedback feel faster */
 }
 
 .collapse-all-btn:disabled {
@@ -144,17 +145,21 @@
 }
 
 
+
+
 /* Item card: represents a single rule or action */
 .item {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center header vertically when collapsed */
+    justify-content: center;
+    /* Center header vertically when collapsed */
     font-size: inherit;
     vertical-align: top;
     box-sizing: border-box;
     border: 1px solid;
-    border-radius: 4px; 
-    /* background-color: #fff; */ /* Will be set per-section */
+    border-radius: 4px;
+    /* background-color: #fff; */
+    /* Will be set per-section */
     overflow: hidden;
 }
 
@@ -179,23 +184,28 @@
 
 /* When item is expanded, change text color for readability */
 .section-container .item:has(.item-content:not(.collapsed)) {
-    color: #000 !important; /* Black text for light mode */
+    color: #000 !important;
+    /* Black text for light mode */
 }
+
 .dark-mode-active .section-container .item:has(.item-content:not(.collapsed)) {
-    color: #fff !important; /* White text for dark mode */
+    color: #fff !important;
+    /* White text for dark mode */
 }
 
 .item-header {
     display: flex;
     align-items: center;
     cursor: pointer;
-    /* flex-grow: 1; */ /* Removed to keep header at top */
+    /* flex-grow: 1; */
+    /* Removed to keep header at top */
     padding: 4px;
 }
 
 .item-header .item-text-container,
 .item-header .chevron {
-    /* color: white; */ /* Color will be inherited or set by section */
+    /* color: white; */
+    /* Color will be inherited or set by section */
 }
 
 .item-header .chevron {
@@ -230,7 +240,8 @@
     padding: 0 8px;
 }
 
-.item-description, .item-reference {
+.item-description,
+.item-reference {
     font-style: italic;
     font-size: inherit;
     margin-top: 0.5em;
@@ -271,7 +282,8 @@
     font-size: inherit;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */ /* Removed to align text to top */
+    /* justify-content: center; */
+    /* Removed to align text to top */
 }
 
 /* Section and item color themes for each rules section */
@@ -281,94 +293,117 @@
     color: white;
     border-color: maroon;
 }
+
 #section-movement .item {
     border-color: maroon;
 }
+
 #section-movement .text {
     color: white;
 }
+
 #section-action,
 #section-action .item {
     background-color: black;
     color: white;
     border-color: black;
 }
+
 #section-action .item {
     border-color: black;
 }
+
 #section-action .text {
     color: white;
 }
+
 #section-bonus-action,
 #section-bonus-action .item {
     background-color: indigo;
     color: white;
     border-color: indigo;
 }
+
 #section-bonus-action .item {
     border-color: indigo;
 }
+
 #section-bonus-action .text {
     color: white;
 }
+
 #section-reaction,
 #section-reaction .item {
     background-color: green;
     color: white;
     border-color: green;
 }
+
 #section-reaction .item {
     border-color: green;
 }
+
 #section-reaction .text {
     color: white;
 }
+
 #section-condition,
 #section-condition .item {
     background-color: darkgoldenrod;
     color: white;
     border-color: darkgoldenrod;
 }
+
 #section-condition .item {
     border-color: darkgoldenrod;
 }
+
 #section-condition .text {
     color: white;
 }
+
 #section-environment,
 #section-environment .item {
     background-color: teal;
     color: white;
     border-color: teal;
 }
+
 #section-environment .item {
     border-color: teal;
 }
+
 #section-environment .text {
     color: white;
 }
+
 #section-settings,
 #section-settings .section-title {
     background-color: darkblue;
     color: white;
     border-color: darkblue;
 }
+
 #section-settings .item {
     border-color: darkblue;
     background-color: #fff;
 }
+
 #section-settings .text {
     color: #000;
 }
 
 /* Page fade transitions for ruleset switching */
 body {
-    opacity: 1; /* Start with full opacity */
+    opacity: 1;
+    /* Start with full opacity */
     transition: opacity 650ms ease-in-out;
 }
+
 body.fade-in {
     /* This class can be used by JS if a fade-in is desired on load */
 }
+
 body.fade-out {
     opacity: 0;
 }
@@ -384,18 +419,22 @@ body {
 .hidden {
     display: none;
 }
+
 ul {
     padding-left: 20px;
 }
+
 p,
 hr {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
 }
+
 hr {
     border: 0px;
     border-top: 1px solid gray;
 }
+
 p:first-child {
     margin-top: 1em;
 }
@@ -412,9 +451,15 @@ p:first-child {
         height: 44px;
     }
 
+    #active-ruleset-label {
+        font-size: 10pt;
+        margin: 10px;
+    }
+
     /* .itemsize {
         width: 100%;
-        /* padding-right: 0; */ /* No padding needed with margin */
+        /* padding-right: 0; */
+    /* No padding needed with margin */
     /* } */
 }
 
@@ -431,7 +476,8 @@ p:first-child {
 
     /* .itemsize {
         width: 50%;
-        /* padding-right: 4px; */ /* No padding needed with margin */
+        /* padding-right: 4px; */
+    /* No padding needed with margin */
     /* } */
 }
 
@@ -448,7 +494,8 @@ p:first-child {
 
     /* .itemsize {
         width: 33%;
-        /* padding-right: 4px; */ /* No padding needed with margin */
+        /* padding-right: 4px; */
+    /* No padding needed with margin */
     /* } */
 }
 
@@ -465,7 +512,8 @@ p:first-child {
 
     /* .itemsize {
         width: 33%;
-        /* padding-right: 4px; */ /* No padding needed with margin */
+        /* padding-right: 4px; */
+    /* No padding needed with margin */
     /* } */
 }
 
@@ -482,7 +530,8 @@ p:first-child {
 
     /* .itemsize {
         width: 25%;
-        /* padding-right: 4px; */ /* No padding needed with margin */
+        /* padding-right: 4px; */
+    /* No padding needed with margin */
     /* } */
 }
 
@@ -499,7 +548,8 @@ p:first-child {
 
     /* .itemsize {
         width: 20%;
-        /* padding-right: 4px; */ /* No padding needed with margin */
+        /* padding-right: 4px; */
+    /* No padding needed with margin */
     /* } */
 }
 
@@ -507,7 +557,8 @@ p:first-child {
 .itemsize {
     /* flex-grow: 1; */
     /* flex-basis: 280px; */
-    width: 100%; /* Items will take the width of the grid column */
+    width: 100%;
+    /* Items will take the width of the grid column */
 }
 
 /* Print */
@@ -523,7 +574,8 @@ p:first-child {
 
     .itemsize {
         width: 33%;
-        /* padding-right: 4px; */ /* No padding needed with margin */
+        /* padding-right: 4px; */
+        /* No padding needed with margin */
     }
 }
 
@@ -534,11 +586,13 @@ p:first-child {
     width: 48px;
     height: 28px;
 }
+
 .switch input {
     opacity: 0;
     width: 0;
     height: 0;
 }
+
 .slider {
     position: absolute;
     cursor: pointer;
@@ -550,6 +604,7 @@ p:first-child {
     -webkit-transition: .4s;
     transition: .4s;
 }
+
 .slider:before {
     position: absolute;
     content: "";
@@ -561,23 +616,29 @@ p:first-child {
     -webkit-transition: .4s;
     transition: .4s;
 }
+
 input:checked+.slider {
     background-color: darkblue;
 }
+
 input:focus+.slider {
     box-shadow: 0 0 1px darkblue;
 }
+
 input:checked+.slider:before {
     -webkit-transform: translateX(20px);
     -ms-transform: translateX(20px);
     transform: translateX(20px);
 }
+
 .slider.round {
     border-radius: 28px;
 }
+
 .slider.round:before {
     border-radius: 50%;
 }
+
 .settings {
     font-weight: bold;
     font-size: inherit;
@@ -599,8 +660,10 @@ input:checked+.slider:before {
 }
 
 .settings-item .item-text-container {
-    flex-shrink: 1; /* Allow text to shrink and wrap */
-    min-width: 0; /* Allow flex item to shrink below its content size */
+    flex-shrink: 1;
+    /* Allow text to shrink and wrap */
+    min-width: 0;
+    /* Allow flex item to shrink below its content size */
 }
 
 .settings-item .item-toggle {
@@ -676,76 +739,96 @@ input:checked+.slider:before {
     background-color: #8f3838;
     border-color: #8f3838;
 }
+
 .dark-mode-active #section-movement .item {
     border-color: #8f3838;
 }
+
 .dark-mode-active #section-movement .text {
     color: #fff;
 }
+
 .dark-mode-active #section-action,
 .dark-mode-active #section-action .item {
     background-color: #09151A;
     border-color: #09151A;
 }
+
 .dark-mode-active #section-action .item {
     border-color: #09151A;
 }
+
 .dark-mode-active #section-action .text {
     color: #fff;
 }
+
 .dark-mode-active #section-bonus-action,
 .dark-mode-active #section-bonus-action .item {
     background-color: #311942;
     border-color: #311942;
 }
+
 .dark-mode-active #section-bonus-action .item {
     border-color: #311942;
 }
+
 .dark-mode-active #section-bonus-action .text {
     color: #fff;
 }
+
 .dark-mode-active #section-reaction,
 .dark-mode-active #section-reaction .item {
     background-color: DarkOliveGreen;
     border-color: DarkOliveGreen;
 }
+
 .dark-mode-active #section-reaction .item {
     border-color: DarkOliveGreen;
 }
+
 .dark-mode-active #section-reaction .text {
     color: #fff;
 }
+
 .dark-mode-active #section-condition .text {
     color: #fff;
 }
+
 .dark-mode-active #section-condition,
 .dark-mode-active #section-condition .item {
     background-color: #7a4b2a;
     border-color: #7a4b2a;
 }
+
 .dark-mode-active #section-condition .item {
     border-color: #7a4b2a;
 }
+
 .dark-mode-active #section-environment,
 .dark-mode-active #section-environment .item {
     background-color: #2f4f4f;
     border-color: #2f4f4f;
 }
+
 .dark-mode-active #section-environment .item {
     border-color: #2f4f4f;
 }
+
 .dark-mode-active #section-environment .text {
     color: #fff;
 }
+
 .dark-mode-active #section-settings,
 .dark-mode-active #section-settings .section-title {
     background-color: DarkSlateBlue;
     border-color: DarkSlateBlue;
 }
+
 .dark-mode-active #section-settings .item {
     border-color: DarkSlateBlue;
     background-color: #333;
 }
+
 .dark-mode-active #section-settings .text {
     /* Subtitle color is handled by the more specific rule for .section-subtitle */
     color: #fff;
@@ -755,6 +838,7 @@ input:checked+.slider:before {
 .dark-mode-active input:checked+.slider {
     background-color: DarkSlateBlue;
 }
+
 .dark-mode-active input:focus+.slider {
     box-shadow: 0 0 1px DarkSlateBlue;
 }
@@ -773,9 +857,11 @@ input:checked+.slider:before {
     z-index: 9999;
     display: none;
 }
+
 .cookie-notice p {
     margin: 0 0 1em 0;
 }
+
 .cookie-notice button {
     font-family: 'Noto Sans', 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
     background: green;
