@@ -1,22 +1,41 @@
-// Dynamically load the correct data files (2024 or standard) based on localStorage setting
+// Dynamically load the correct data files (2024 or standard) and language-specific variants
 (function() {
     var rules2024 = localStorage.getItem('rules2024') === 'true';
+    // language stored as 'appLanguage' (values: 'en' or 'uk')
+    var lang = localStorage.getItem('appLanguage') || (navigator.language || navigator.userLanguage || 'en');
+    lang = (lang + '').toLowerCase().startsWith('uk') ? 'uk' : (lang === 'en' ? 'en' : (lang.indexOf('uk') === 0 ? 'uk' : 'en'));
     var head = document.getElementsByTagName('head')[0];
 
-    // Helper to inject a script tag for a data file
-    function loadScript(src) {
+    // Helper to inject a script tag for a data file with optional fallback on error
+    function loadScript(src, fallback) {
         var script = document.createElement('script');
         script.src = src;
         script.defer = false;
+        if (fallback) {
+            script.onerror = function () {
+                // load fallback (English) if language-specific file missing
+                try {
+                    var fb = document.createElement('script');
+                    fb.src = fallback;
+                    fb.defer = false;
+                    head.appendChild(fb);
+                } catch (e) {
+                    // swallow
+                }
+            };
+        }
         head.appendChild(script);
     }
 
-    // Load either the 2024 or standard data file for a given base name
+    // Load either the 2024 or standard data file for a given base name and language
     function loadRuleFile(base) {
-        if (rules2024) {
-            loadScript('js/2024_' + base + '.js');
+        var prefix = rules2024 ? 'js/2024_' : 'js/';
+        var eng = prefix + base + '.js';
+        if (lang === 'uk') {
+            var uk = prefix + base + '_uk.js';
+            loadScript(uk, eng);
         } else {
-            loadScript('js/' + base + '.js');
+            loadScript(eng);
         }
     }
 
@@ -32,6 +51,149 @@
 
     ruleFiles.forEach(loadRuleFile);
 })();
+
+// Translations for UI strings
+var UI_TRANSLATIONS = {
+    en: {
+        collapseAll: 'Collapse all items',
+        movement: { title: 'Movement', floatRight: 'limited by movement speed', subtitle: 'You can move at any time during your turn (before, after, or during actions).' },
+        action: { title: 'Action', floatRight: '1/turn', subtitle: 'You can also interact with one object or feature of the environment for free.' },
+        bonus: { title: 'Bonus action', floatRight: 'max. 1/turn', subtitle: 'You can take a bonus action only when a special ability, spell, or feature states that you can do something as a bonus action.' },
+        reaction: { title: 'Reaction', floatRight: 'max. 1/round', subtitle: 'A reaction is an instant response to a trigger of some kind, which can occur on your turn or on someone else\'s.' },
+        condition: { title: 'Condition', subtitle: 'Conditions alter your capabilities in a variety of ways, and can arise as a result of a spell, a class feature, a monster\'s attack, or other effect.' },
+        environment: {
+            title: 'Environmental Effects',
+            sub1: 'Effects that obscure vision can prove a significant hindrance to most adventuring tasks.',
+            sub2: 'The presence or absence of light in an environment creates three categories of illumination.',
+            sub3: 'Some creatures have extraordinary senses that allow them to perceive their environment.',
+            sub4: 'Obstacles can provide cover during combat, making a target more difficult to harm.'
+        },
+        settings: { title: 'Settings', subtitle: 'You can change below toggles to adjust settings for this page.' },
+        optional: { title: 'Include Optional Rules (*)', desc: 'Show/hide optional official rules.' },
+        homebrew: { title: 'Include Homebrew Rules (**)', desc: 'Show/hide most common homebrew rules.' },
+        darkmode: { title: 'Darkmode', desc: 'Enable/Disable Darkmode' },
+        rules2024_on: { title: 'Switch to 2014 Rules', desc: 'Switches to the D&D 2014 (legacy) ruleset.' },
+        rules2024_off: { title: 'Switch to 2024 Rules', desc: 'Switches to the D&D 2024 ruleset.' },
+        activeRuleset_on: 'Current Ruleset: D&D 2024',
+        activeRuleset_off: 'Current Ruleset: D&D 2014 (legacy)',
+        feedback: { title: 'Leave Feedback', desc: 'Found an issue or have a suggestion? Let me know!' },
+        cookie: { text: 'This website uses cookies to ensure you get the best experience on our website.', button: 'Accept' }
+    },
+    uk: {
+        collapseAll: 'Згорнути всі пункти',
+        movement: { title: 'Рух', floatRight: 'обмежено швидкістю руху', subtitle: 'Ви можете рухатися в будь-який момент під час свого ходу (до, після або під час дій).' },
+        action: { title: 'Дія', floatRight: '1/хід', subtitle: 'Ви також можете взаємодіяти з одним об\'єктом або елементом середовища безкоштовно.' },
+        bonus: { title: 'Бонусна дія', floatRight: 'макс. 1/хід', subtitle: 'Ви можете виконати бонусну дію тільки коли особливість, заклинання або здатність дозволяє це.' },
+        reaction: { title: 'Реакція', floatRight: 'макс. 1/раунд', subtitle: 'Реакція — миттєва відповідь на певний тригер, яка може статися у ваш хід або під час ходу іншого.' },
+        condition: { title: 'Стан', subtitle: 'Стан впливає на ваші можливості по-різному і може виникнути через заклинання, особливість класу, атаку монстра або інший ефект.' },
+        environment: {
+            title: 'Ефекти навколишнього середовища',
+            sub1: 'Ефекти, що затемнюють огляд, можуть суттєво ускладнити виконання завдань під час пригоди.',
+            sub2: 'Присутність або відсутність світла у середовищі створює три категорії освітлення.',
+            sub3: 'Деякі істоти мають надзвичайні почуття, що дозволяють їм сприймати навколишнє середовище.',
+            sub4: 'Перешкоди можуть надавати укриття в бою, ускладнюючи нанесення шкоди цілі.'
+        },
+        settings: { title: 'Налаштування', subtitle: 'Ви можете змінити наведені нижче перемикачі, щоб налаштувати цю сторінку.' },
+        optional: { title: 'Включити необов\'язкові правила (*)', desc: 'Показати/сховати необов\'язкові офіційні правила.' },
+        homebrew: { title: 'Включити домашні правила (**)', desc: 'Показати/сховати найпоширеніші домашні правила.' },
+        darkmode: { title: 'Темна тема', desc: 'Увімкнути/вимкнути темну тему' },
+        rules2024_on: { title: 'Переключити на правила 2014', desc: 'Переключає на застарілий набір правил D&D 2014.' },
+        rules2024_off: { title: 'Переключити на правила 2024', desc: 'Переключає на набір правил D&D 2024.' },
+        activeRuleset_on: 'Поточний набір правил: D&D 2024',
+        activeRuleset_off: 'Поточний набір правил: D&D 2014 (застарілий)',
+        feedback: { title: 'Залишити відгук', desc: 'Знайшли проблему або маєте пропозицію? Повідомте мене!' },
+        cookie: { text: 'Цей вебсайт використовує файли cookie, щоб забезпечити кращий досвід користування.', button: 'Прийняти' }
+    }
+};
+
+// Apply translations to static UI elements
+function applyTranslations(lang) {
+    if (!lang) lang = document.documentElement.lang || 'en';
+    var t = UI_TRANSLATIONS[lang] || UI_TRANSLATIONS.en;
+
+    // Collapse all buttons
+    document.querySelectorAll('.collapse-all-btn').forEach(function(btn) {
+        btn.textContent = t.collapseAll;
+    });
+
+    // Section titles and float-right labels
+    var s = document.getElementById('section-movement');
+    if (s) {
+        var el = s.querySelector('.section-title-text');
+        if (el) {
+            // set text node for title without disturbing children
+            for (var i = 0; i < el.childNodes.length; i++) {
+                if (el.childNodes[i].nodeType === Node.TEXT_NODE) {
+                    el.childNodes[i].nodeValue = t.movement.title + ' ';
+                    break;
+                }
+            }
+        }
+        var fr = s.querySelector('.float-right'); if (fr) fr.textContent = t.movement.floatRight;
+        var sub = s.querySelector('.section-content .section-row.section-subtitle'); if (sub) sub.textContent = t.movement.subtitle;
+    }
+
+    var s2 = document.getElementById('section-action');
+    if (s2) {
+        var el2 = s2.querySelector('.section-title-text');
+        if (el2) for (var i = 0; i < el2.childNodes.length; i++) if (el2.childNodes[i].nodeType === Node.TEXT_NODE) { el2.childNodes[i].nodeValue = t.action.title + ' '; break; }
+        var fr2 = s2.querySelector('.float-right'); if (fr2) fr2.textContent = t.action.floatRight;
+        var sub2 = s2.querySelector('.section-content .section-row.section-subtitle'); if (sub2) sub2.textContent = t.action.subtitle;
+    }
+
+    var sb = document.getElementById('section-bonus-action');
+    if (sb) {
+        var elb = sb.querySelector('.section-title-text');
+        if (elb) for (var i = 0; i < elb.childNodes.length; i++) if (elb.childNodes[i].nodeType === Node.TEXT_NODE) { elb.childNodes[i].nodeValue = t.bonus.title + ' '; break; }
+        var frb = sb.querySelector('.float-right'); if (frb) frb.textContent = t.bonus.floatRight;
+        var subb = sb.querySelector('.section-content .section-row.section-subtitle'); if (subb) subb.textContent = t.bonus.subtitle;
+    }
+
+    var sr = document.getElementById('section-reaction');
+    if (sr) {
+        var elr = sr.querySelector('.section-title-text');
+        if (elr) for (var i = 0; i < elr.childNodes.length; i++) if (elr.childNodes[i].nodeType === Node.TEXT_NODE) { elr.childNodes[i].nodeValue = t.reaction.title + ' '; break; }
+        var frr = sr.querySelector('.float-right'); if (frr) frr.textContent = t.reaction.floatRight;
+        var subr = sr.querySelector('.section-content .section-row.section-subtitle'); if (subr) subr.textContent = t.reaction.subtitle;
+    }
+
+    var sc = document.getElementById('section-condition');
+    if (sc) {
+        var elc = sc.querySelector('.section-title-text');
+        if (elc) for (var i = 0; i < elc.childNodes.length; i++) if (elc.childNodes[i].nodeType === Node.TEXT_NODE) { elc.childNodes[i].nodeValue = t.condition.title + ' '; break; }
+        var subc = sc.querySelector('.section-content .section-row.section-subtitle'); if (subc) subc.textContent = t.condition.subtitle;
+    }
+
+    var se = document.getElementById('section-environment');
+    if (se) {
+        var ele = se.querySelector('.section-title-text');
+        if (ele) for (var i = 0; i < ele.childNodes.length; i++) if (ele.childNodes[i].nodeType === Node.TEXT_NODE) { ele.childNodes[i].nodeValue = t.environment.title + ' '; break; }
+        var subs = se.querySelectorAll('.section-content .section-row.section-subtitle');
+        if (subs && subs.length >= 4) {
+            subs[0].textContent = t.environment.sub1;
+            subs[1].textContent = t.environment.sub2;
+            subs[2].textContent = t.environment.sub3;
+            subs[3].textContent = t.environment.sub4;
+        }
+    }
+
+    // Settings labels
+    var settingsTitle = document.querySelector('#section-settings .section-title-text');
+    if (settingsTitle) for (var i = 0; i < settingsTitle.childNodes.length; i++) if (settingsTitle.childNodes[i].nodeType === Node.TEXT_NODE) { settingsTitle.childNodes[i].nodeValue = t.settings.title + ' '; break; }
+    var settingsSub = document.querySelector('#section-settings .section-content .section-row.section-subtitle'); if (settingsSub) settingsSub.textContent = t.settings.subtitle;
+
+    var opt = document.getElementById('optional-toggle-item'); if (opt) { var tt = opt.querySelector('.item-title'); var td = opt.querySelector('.item-desc'); if (tt) tt.textContent = t.optional.title; if (td) td.textContent = t.optional.desc; }
+    var hb = document.getElementById('homebrew-toggle-item'); if (hb) { var ht = hb.querySelector('.item-title'); var hd = hb.querySelector('.item-desc'); if (ht) ht.textContent = t.homebrew.title; if (hd) hd.textContent = t.homebrew.desc; }
+    var dm = document.getElementById('darkmode-toggle-item'); if (dm) { var dmt = dm.querySelector('.item-title'); var dmd = dm.querySelector('.item-desc'); if (dmt) dmt.textContent = t.darkmode.title; if (dmd) dmd.textContent = t.darkmode.desc; }
+
+    var fb = document.getElementById('2024rules-toggle-item'); if (fb) { /* updateRulesToggleLabel will fill titles */ }
+
+    var feedback = document.getElementById('feedback-link-item'); if (feedback) { var ft = feedback.querySelector('.item-title'); var fd = feedback.querySelector('.item-desc'); if (ft) ft.textContent = t.feedback.title; if (fd) fd.textContent = t.feedback.desc; }
+
+    // Cookie notice
+    var cookie = document.getElementById('cookie-notice'); if (cookie) { var p = cookie.querySelector('p'); var btn = cookie.querySelector('#accept-cookies'); if (p) p.textContent = t.cookie.text; if (btn) btn.textContent = t.cookie.button; }
+
+}
 
 // Create and append a quick reference item to a section
 // Sets up modal open logic for the item
@@ -290,6 +452,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Initialize collapsible sections
     initCollapsibleSections();
+    // Ensure document.lang is set from saved preference so translations apply correctly
+    try {
+        var savedLang = localStorage.getItem('appLanguage');
+        if (!savedLang) {
+            var nav = (navigator.language || navigator.userLanguage || 'en');
+            savedLang = nav.toLowerCase().startsWith('uk') ? 'uk' : 'en';
+        }
+        document.documentElement.lang = savedLang;
+        applyTranslations(savedLang);
+    } catch (e) {
+        try { applyTranslations(document.documentElement.lang || 'en'); } catch (e) {}
+    }
+    // Listen for dynamic language changes (fallback)
+    document.addEventListener('languageChanged', function (ev) {
+        try { applyTranslations(ev.detail && ev.detail.lang ? ev.detail.lang : document.documentElement.lang); } catch (e) {}
+    });
     // Ensure default values for toggles in localStorage
 
     // Update settings section to show app version instead of "collapse all" button
@@ -325,15 +503,17 @@ document.addEventListener("DOMContentLoaded", function () {
         var descEl = labelItem.querySelector('.item-desc');
 
         var activeLabel = document.getElementById('active-ruleset-label');
+        var lang = document.documentElement.lang || 'en';
+        var t = UI_TRANSLATIONS[lang] || UI_TRANSLATIONS.en;
 
         if (rules2024Checkbox.checked) {
-            if (titleEl) titleEl.textContent = 'Switch to 2014 Rules';
-            if (descEl) descEl.textContent = 'Switches to the D&D 2014 (legacy) ruleset.';
-            if (activeLabel) activeLabel.textContent = 'Current Ruleset: D&D 2024';
+            if (titleEl) titleEl.textContent = t.rules2024_on.title;
+            if (descEl) descEl.textContent = t.rules2024_on.desc;
+            if (activeLabel) activeLabel.textContent = t.activeRuleset_on;
         } else {
-            if (titleEl) titleEl.textContent = 'Switch to 2024 Rules';
-            if (descEl) descEl.textContent = 'Switches to the D&D 2024 ruleset.';
-            if (activeLabel) activeLabel.textContent = 'Current Ruleset: D&D 2014 (legacy)';
+            if (titleEl) titleEl.textContent = t.rules2024_off.title;
+            if (descEl) descEl.textContent = t.rules2024_off.desc;
+            if (activeLabel) activeLabel.textContent = t.activeRuleset_off;
         }
     }
     updateRulesToggleLabel();
