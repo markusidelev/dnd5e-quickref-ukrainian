@@ -119,6 +119,8 @@
 /* Utility class for floating elements to the right */
 .float-right {
     float: right;
+    text-align: right;
+    font-size: 14pt;
 }
 
 
