@@ -1,4 +1,4 @@
-# 🎲 mfriik/dnd5e-quickref v2.0
+# 🎲 markusidele/dnd5e-quickref v2.0 based on mfriik fork
 
 > **💡 Important:**  
 > If the page looks off, sections don’t load, or you’re not seeing the newest features —  
