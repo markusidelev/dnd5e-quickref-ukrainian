@@ -868,11 +868,11 @@ input:checked+.slider:before {
 }
 
 /* Ensure non-dark-mode elements that had #333/#222 also go black when oled-mode is on */
-.oled-mode .section-content,
+/* .oled-mode .section-content,
 .oled-mode .item-content,
 .oled-mode .section-container{
     background-color: #000000 !important;
-}
+} */
 
 /* Make the Action section blue in every mode */
 #section-action,
