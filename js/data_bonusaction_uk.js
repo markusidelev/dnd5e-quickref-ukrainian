@@ -36,7 +36,7 @@ data_bonusaction = [
         ]
     },
     {
-        title: "Випити зілля (Drink a potion)",
+        title: "Випити зілля** (Drink a potion**)",
         optional: "Standard rule",
         icon: "potion-ball",
         subtitle: "Киньте куби за описом ефекту",
